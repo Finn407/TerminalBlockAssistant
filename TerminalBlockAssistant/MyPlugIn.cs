@@ -27,6 +27,7 @@ namespace TerminalBlockAssistant
         private NavigationStore _navigationStore;
         private IEngineeringBaseService _engineeringBaseService;
         private ICountService _countService;
+        private ISubmitService _submitService;
         public override void Run(Application myApplication)
         {
             _services = new ServiceCollection();
@@ -35,12 +36,14 @@ namespace TerminalBlockAssistant
             _services.AddSingleton<NavigationStore>();
             _services.AddTransient<MainViewModel>();
             _services.AddSingleton<ICountService, CountService>();
+            _services.AddSingleton<ISubmitService, SubmitService>();
 
             IServiceProvider serviceProvider = _services.BuildServiceProvider();
 
             _engineeringBaseService = serviceProvider.GetService<IEngineeringBaseService>();
             _navigationStore = serviceProvider.GetService<NavigationStore>();
             _countService = serviceProvider.GetService<ICountService>();
+            _submitService = serviceProvider.GetService<ISubmitService>();
             _navigationStore.CurrentViewModel = createTerminalBlockViewModel();
             
             MainWindow window = new MainWindow();
@@ -62,7 +65,7 @@ namespace TerminalBlockAssistant
         }
         public TerminalBlockViewModel createTerminalBlockViewModel()
         {
-            return new TerminalBlockViewModel(_engineeringBaseService,_navigationStore, _countService);
+            return new TerminalBlockViewModel(_engineeringBaseService,_navigationStore, _countService,_submitService);
         }
     }
 

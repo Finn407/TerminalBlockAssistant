@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TerminalBlockAssistant.Models;
 using TerminalBlockAssistant.Services;
 using TerminalBlockAssistant.Stores;
 
@@ -16,34 +17,49 @@ namespace TerminalBlockAssistant.Commands
         private readonly NavigationStore _navigationStore;
         private Aucotec.EngineeringBase.Client.Runtime.Application _application;
         private ICountService _countService;
+        private ISubmitService _submitService;
         public override void Execute(object parameter)
         {
             _application = _engineeringBaseService.GetApplication();
             ObjectItem selectedItem = _application.Selection.FirstOrDefault();
             int count = _countService.GetCount();
-
-            if (selectedItem.TypeId == ObjectType.DevTerminalBlock)
+            ObjectItem selectedMaterial = null;
+            foreach (ObjectItem obj in _submitService.ObjectItems()) 
             {
-                for (int i = 0; i < count; i++) 
+                if (obj.Name == _submitService.MaterialName()) 
                 {
-                    ObjectItem temp = selectedItem.NewChild(ObjectKind.Device,ObjectType.DevTerminal);
-                    //temp.Attributes.FindById(AttributeId.).Value=
-                    temp.Store();
+                    selectedMaterial = obj;
                 }
-                _countService.SetCount(count);
             }
-            else 
+            if (!(selectedMaterial is null)) 
             {
-                MessageBox.Show("Es wurde keine Klemme ausgewählt", "Fehler",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
+                if (selectedItem.TypeId == ObjectType.DevTerminalBlock)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        
+                        //selectedMaterial.Name = i.ToString();
+                        selectedMaterial.CopyTo(selectedItem);
+                        selectedMaterial.Store();
+                    }
+                    _countService.SetCount(count);
+                }
+                else
+                {
+                    MessageBox.Show("Es wurde keine Klemme ausgewählt", "Fehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                }
             }
+
+
         }
-        public CreateTerminalBlockCommand(IEngineeringBaseService engineeringBaseService,NavigationStore navigationStore, ICountService countService) 
+        public CreateTerminalBlockCommand(IEngineeringBaseService engineeringBaseService,NavigationStore navigationStore, ICountService countService,ISubmitService submitService) 
         {
             _engineeringBaseService = engineeringBaseService;
             _navigationStore = navigationStore;
             _countService = countService;
+            _submitService = submitService;
         }
         
     }
