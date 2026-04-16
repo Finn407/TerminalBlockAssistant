@@ -39,8 +39,14 @@ namespace TerminalBlockAssistant.Commands
                     {
                         
                         //selectedMaterial.Name = i.ToString();
-                        selectedMaterial.CopyTo(selectedItem);
-                        selectedMaterial.Store();
+                        ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
+                        var attr = newItem.Attributes[4];
+                        attr.Value = $"Klemme_{i}";
+
+                        newItem.Store();
+
+                        ObjectItem temp = selectedItem.Children.FirstOrDefault(x => x.Id == selectedMaterial.Id);
+                        if(temp!=null)temp.Attributes.SetAttributeValue(AttributeId.Designation, i.ToString());
                     }
                     _countService.SetCount(count);
                 }
