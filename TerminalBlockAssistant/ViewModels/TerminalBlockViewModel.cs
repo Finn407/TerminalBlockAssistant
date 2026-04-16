@@ -21,24 +21,34 @@ namespace TerminalBlockAssistant.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly ICountService _countService;
         private readonly ISubmitService _submitService;
+        private readonly ITextBoxInputService _textBoxInputService;
         private string _text;
         public string Text { get => _text; set { _text = value; _countService.SetCount(Parse(value)); OnPropertyChanged(nameof(Text)); } }
         private ObservableCollection<ObjectItem> Materials;
         private string selectedMaterial;
-
         public ICommand CreateTerminalBlockCommand { get; }
+        public ICommand SetIndividualNamesCommand { get; }
+        public ICommand SetIndividualTextBoxesCommand { get; }
         public ObjectCollection ObjectItems { get; set; }
         public string SelectedMaterial { get => selectedMaterial; set { selectedMaterial = value; _submitService.setMaterialName(value);OnPropertyChanged(nameof(SelectedMaterial)); } }
         public List<string> MaterialNames { get; set; }
         public SubmitModel submitModel {get;set;}
-
-        public TerminalBlockViewModel(IEngineeringBaseService engineeringBaseService, NavigationStore navigationStore,ICountService countService,ISubmitService submitService) 
+        private ObservableCollection<TextBoxInput> _textBoxes;
+        public ObservableCollection<TextBoxInput> TextBoxes { get => _textBoxes; set { _textBoxes = value;OnPropertyChanged(nameof(TextBoxes)); } }
+        public TerminalBlockViewModel(IEngineeringBaseService engineeringBaseService, NavigationStore navigationStore,ICountService countService,ISubmitService submitService, ITextBoxInputService textBoxInputService) 
         {
             _engineeringBaseService = engineeringBaseService;
             _navigationStore = navigationStore;
             _countService = countService;
             _submitService = submitService;
-            CreateTerminalBlockCommand = new CreateTerminalBlockCommand(_engineeringBaseService,_navigationStore,_countService,_submitService);
+            _textBoxInputService = textBoxInputService;
+
+            CreateTerminalBlockCommand = new CreateTerminalBlockCommand(_engineeringBaseService,_countService,_submitService);
+            SetIndividualNamesCommand = new SetIndividualNamesCommand(_textBoxInputService,_countService,_engineeringBaseService,_submitService);
+            SetIndividualTextBoxesCommand = new SetIndividualTextBoxesCommand(_textBoxInputService, _countService, this);
+
+
+
             var catalogs = _engineeringBaseService.GetApplication().Folders.Catalogs;
             MaterialNames = new List<string>();
             foreach (var item in catalogs.Children) 
@@ -57,10 +67,6 @@ namespace TerminalBlockAssistant.ViewModels
                     break;
                 }
             }
-
-
-
-
         }
         public int Parse(string input)
         {
@@ -79,6 +85,15 @@ namespace TerminalBlockAssistant.ViewModels
                 }
             }
             return 0;
+        }
+        public void GenerateTextBoxes() 
+        {
+            _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
+            for (int i = 0; i < _countService.GetCount(); i++)
+            {
+                _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
+            }
+            TextBoxes = _textBoxInputService.GetTextBoxInputs();
         }
     }
 }

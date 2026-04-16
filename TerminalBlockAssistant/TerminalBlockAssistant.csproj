@@ -67,7 +67,10 @@
   <ItemGroup>
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\CreateTerminalBlockCommand.cs" />
+    <Compile Include="Commands\SetIndividualNamesCommand.cs" />
+    <Compile Include="Commands\SetIndividualTextBoxesCommand.cs" />
     <Compile Include="Models\SubmitModel.cs" />
+    <Compile Include="Models\TextBoxInput.cs" />
     <Compile Include="MyPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CountService.cs" />
@@ -75,8 +78,10 @@
     <Compile Include="Services\ICountService.cs" />
     <Compile Include="Services\IEngineeringBaseService.cs" />
     <Compile Include="Services\ISubmitService.cs" />
+    <Compile Include="Services\ITextBoxInputService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SubmitService.cs" />
+    <Compile Include="Services\TextBoxInputService.cs" />
     <Compile Include="Stores\NavigationStore.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

@@ -14,7 +14,6 @@ namespace TerminalBlockAssistant.Commands
     public class CreateTerminalBlockCommand : CommandBase
     {
         private readonly IEngineeringBaseService _engineeringBaseService;
-        private readonly NavigationStore _navigationStore;
         private Aucotec.EngineeringBase.Client.Runtime.Application _application;
         private ICountService _countService;
         private ISubmitService _submitService;
@@ -37,16 +36,13 @@ namespace TerminalBlockAssistant.Commands
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        
-                        //selectedMaterial.Name = i.ToString();
                         ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
                         var attr = newItem.Attributes[4];
                         attr.Value = $"Klemme_{i}";
 
                         newItem.Store();
 
-                        ObjectItem temp = selectedItem.Children.FirstOrDefault(x => x.Id == selectedMaterial.Id);
-                        if(temp!=null)temp.Attributes.SetAttributeValue(AttributeId.Designation, i.ToString());
+
                     }
                     _countService.SetCount(count);
                 }
@@ -60,13 +56,13 @@ namespace TerminalBlockAssistant.Commands
 
 
         }
-        public CreateTerminalBlockCommand(IEngineeringBaseService engineeringBaseService,NavigationStore navigationStore, ICountService countService,ISubmitService submitService) 
+        public CreateTerminalBlockCommand(IEngineeringBaseService engineeringBaseService, ICountService countService,ISubmitService submitService) 
         {
             _engineeringBaseService = engineeringBaseService;
-            _navigationStore = navigationStore;
             _countService = countService;
             _submitService = submitService;
         }
+
         
     }
 }
