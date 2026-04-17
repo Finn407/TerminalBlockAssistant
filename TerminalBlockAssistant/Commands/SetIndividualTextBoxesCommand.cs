@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TerminalBlockAssistant.Models;
 using TerminalBlockAssistant.Services;
@@ -20,6 +21,17 @@ namespace TerminalBlockAssistant.Commands
         public override void Execute(object parameter)
         {
             _terminalBlockViewModel.GenerateTextBoxes();
+            if (_countService.getIndividualCreateVisibility() == System.Windows.Visibility.Hidden)
+            {
+                _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Visible;
+                _terminalBlockViewModel.IndexCreateVisibility = Visibility.Hidden;
+            }
+            else 
+            { 
+                _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Hidden;
+                _terminalBlockViewModel.IndexCreateVisibility = Visibility.Visible;
+                _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
+            }
         }
 
         public SetIndividualTextBoxesCommand(ITextBoxInputService textBoxInputService, ICountService countService, TerminalBlockViewModel terminalBlockViewModel) 

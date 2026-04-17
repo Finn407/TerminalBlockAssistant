@@ -13,5 +13,6 @@ namespace TerminalBlockAssistant.Services
         ObjectCollection ObjectItems();
         void setMaterialName(string materialName);
         void setObjectItems(ObjectCollection objectItems);
+
     }
 }

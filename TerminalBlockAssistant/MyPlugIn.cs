@@ -5,11 +5,13 @@ using System.AddIn;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using TerminalBlockAssistant.Services;
 using TerminalBlockAssistant.Stores;
 using TerminalBlockAssistant.ViewModels;
+using Wpf.Ui.Appearance;
 
 namespace TerminalBlockAssistant
 {
@@ -29,8 +31,9 @@ namespace TerminalBlockAssistant
         private ICountService _countService;
         private ISubmitService _submitService;
         private ITextBoxInputService _textBoxInputService;
-        public override void Run(Application myApplication)
+        public override void Run(Aucotec.EngineeringBase.Client.Runtime.Application myApplication)
         {
+
             _services = new ServiceCollection();
             _services.AddSingleton(myApplication);
             _services.AddSingleton<IEngineeringBaseService, EngineeringBaseService>();
@@ -48,16 +51,16 @@ namespace TerminalBlockAssistant
             _submitService = serviceProvider.GetService<ISubmitService>();
             _textBoxInputService = serviceProvider.GetService<ITextBoxInputService>();  
             _navigationStore.CurrentViewModel = createTerminalBlockViewModel();
-            
+
+
+
             MainWindow window = new MainWindow();
-            window.DataContext = serviceProvider.GetService<MainViewModel>();   
 
 
-            //MainWindow frm = new MainWindow();
-            //frm.DataContext = myApplication.RootObject;
+            window.DataContext = serviceProvider.GetService<MainViewModel>();
 
-            WindowInteropHelper wih = new WindowInteropHelper(window);
-            wih.Owner = myApplication.ActiveWindow.Handle;
+            ApplicationThemeManager.Apply(ApplicationTheme.Dark);
+
             window.ShowDialog();
 
 

@@ -26,7 +26,7 @@ namespace TerminalBlockAssistant.ViewModels
         public string Text { get => _text; set 
             {
                 _text = value;
-                _countService.SetCount(int.Parse(value));
+                _countService.SetCount(value);
                     OnPropertyChanged(nameof(Text)); 
             } } 
         private ObservableCollection<ObjectItem> Materials;
@@ -34,7 +34,6 @@ namespace TerminalBlockAssistant.ViewModels
         public ICommand CreateTerminalBlockCommand { get; }
         public ICommand SetIndividualNamesCommand { get; }
         public ICommand SetIndividualTextBoxesCommand { get; }
-        public ICommand SetTerminalBlocksWithIndexCommand { get; }
         public ObjectCollection ObjectItems { get; set; }
         public string SelectedMaterial { get => selectedMaterial; set { selectedMaterial = value; _submitService.setMaterialName(value);OnPropertyChanged(nameof(SelectedMaterial)); } }
         public List<string> MaterialNames { get; set; }
@@ -42,7 +41,11 @@ namespace TerminalBlockAssistant.ViewModels
         private ObservableCollection<TextBoxInput> _textBoxes;
         public ObservableCollection<TextBoxInput> TextBoxes { get => _textBoxes; set { _textBoxes = value;OnPropertyChanged(nameof(TextBoxes)); } }
         private string _individualText;
-        public string IndividualText {get=> _individualText;set { _individualText = value;_countService.SetIndividualCount(int.Parse(value)); OnPropertyChanged(nameof(IndividualText)); } }
+        public string IndividualText {get=> _individualText;set { _individualText = value;_countService.SetIndividualCount(value); OnPropertyChanged(nameof(IndividualText)); } }
+        private Visibility _individualCreateVisibility;
+        public Visibility IndividualCreateVisibility { get => _individualCreateVisibility; set { _individualCreateVisibility = value; _countService.setIndividualCreateVisibility(value); OnPropertyChanged(nameof(IndividualCreateVisibility)); } }
+        private Visibility _indexCreateVisibility;
+        public Visibility IndexCreateVisibility { get => _indexCreateVisibility; set { _indexCreateVisibility = value; _countService.setIndexCreateVisibility(value);OnPropertyChanged(nameof(IndexCreateVisibility)); } }
         public TerminalBlockViewModel(IEngineeringBaseService engineeringBaseService, NavigationStore navigationStore,ICountService countService,ISubmitService submitService, ITextBoxInputService textBoxInputService) 
         {
             _engineeringBaseService = engineeringBaseService;
@@ -51,12 +54,12 @@ namespace TerminalBlockAssistant.ViewModels
             _submitService = submitService;
             _textBoxInputService = textBoxInputService;
 
-            CreateTerminalBlockCommand = new CreateTerminalBlockCommand(_engineeringBaseService,_countService,_submitService);
+            CreateTerminalBlockCommand = new CreateTerminalBlockCommand(_engineeringBaseService,_countService,_submitService,_textBoxInputService);
             SetIndividualNamesCommand = new SetIndividualNamesCommand(_textBoxInputService,_countService,_engineeringBaseService,_submitService);
             SetIndividualTextBoxesCommand = new SetIndividualTextBoxesCommand(_textBoxInputService, _countService, this);
-            SetTerminalBlocksWithIndexCommand = new SetTerminalBlocksWithIndexCommand(_engineeringBaseService,_countService,_submitService);
-
-
+            
+            IndividualCreateVisibility = Visibility.Hidden;
+            IndexCreateVisibility = Visibility.Visible;
 
             var catalogs = _engineeringBaseService.GetApplication().Folders.Catalogs;
             MaterialNames = new List<string>();
@@ -80,7 +83,8 @@ namespace TerminalBlockAssistant.ViewModels
         public void GenerateTextBoxes() 
         {
             _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
-            for (int i = 0; i < int.Parse(Text); i++)
+            int.TryParse(Text, out int result);
+            for (int i = 0; i < result; i++)
             {
                 _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
             }

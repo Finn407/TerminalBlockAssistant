@@ -30,5 +30,6 @@ namespace TerminalBlockAssistant.Services
         {
             _objectItems = objectItems;
         }
+
     }
 }
