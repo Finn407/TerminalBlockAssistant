@@ -10,6 +10,8 @@ namespace TerminalBlockAssistant.Services
     {
         private int _count;
         public int Count { get { return _count; } set { _count = value; } }
+        private int _individualCount;
+        public int IndividualCount { get { return _individualCount; } set { _individualCount = value; } }
         public int GetCount()
         {
             return _count;
@@ -18,6 +20,14 @@ namespace TerminalBlockAssistant.Services
         public void SetCount(int value)
         {
             Count = value;
+        }
+        public int GetIndividualCount() 
+        {
+            return _individualCount;
+        }
+        public void SetIndividualCount(int value)
+        {
+            IndividualCount = value;
         }
         public CountService() 
         {

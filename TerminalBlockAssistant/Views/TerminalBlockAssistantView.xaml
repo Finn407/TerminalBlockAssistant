@@ -54,16 +54,13 @@
         </Border>
 
         <Border Grid.Column="1" Grid.Row="3">
-            <TextBox Text="" Height="Auto" Padding="20,0,10,0" MinHeight="20" FontSize="18"/>
+            <TextBox Text="{Binding IndividualText,Mode=TwoWay}" PreviewTextInput="NumberOnly" Height="Auto" Padding="20,0,10,0" MinHeight="20" FontSize="18"/>
         </Border>
 
         <Border Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
-            <Button Content="Klemmen ab Index hinzufügen" FontSize="18"/>
+            <Button Content="Klemmen ab Index hinzufügen" FontSize="18" Command="{Binding SetTerminalBlocksWithIndexCommand}"/>
         </Border>
 
-        <Border Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
-            <Button Content="Klemmen ab Index hinzufügen" FontSize="18"/>
-        </Border>
 
         <Border Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
             <Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" FontSize="18"/>

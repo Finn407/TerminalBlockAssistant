@@ -69,6 +69,7 @@
     <Compile Include="Commands\CreateTerminalBlockCommand.cs" />
     <Compile Include="Commands\SetIndividualNamesCommand.cs" />
     <Compile Include="Commands\SetIndividualTextBoxesCommand.cs" />
+    <Compile Include="Commands\SetTerminalBlocksWithIndexCommand.cs" />
     <Compile Include="Models\SubmitModel.cs" />
     <Compile Include="Models\TextBoxInput.cs" />
     <Compile Include="MyPlugIn.cs" />

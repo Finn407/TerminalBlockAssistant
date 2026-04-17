@@ -10,5 +10,7 @@ namespace TerminalBlockAssistant.Services
     {
         int GetCount();
         void SetCount(int value);
+        int GetIndividualCount();
+        void SetIndividualCount(int value);
     }
 }
