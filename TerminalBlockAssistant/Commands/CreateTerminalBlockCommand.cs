@@ -17,6 +17,7 @@ namespace TerminalBlockAssistant.Commands
         private Aucotec.EngineeringBase.Client.Runtime.Application _application;
         private ICountService _countService;
         private ISubmitService _submitService;
+        private string ErrorMessage = "";
         public override void Execute(object parameter)
         {
             _application = _engineeringBaseService.GetApplication();
@@ -36,13 +37,27 @@ namespace TerminalBlockAssistant.Commands
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
-                        var attr = newItem.Attributes[4];
-                        attr.Value = $"Klemme_{i}";
+                        
 
-                        newItem.Store();
+                        if ((_application.Selection.FirstOrDefault().Children.FirstOrDefault(x => x.Name == $"Klemme_{i}")) is null) 
+                        {
+                            ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
+                            var attr = newItem.Attributes[4];
+                            attr.Value = $"Klemme_{i}";
+                            newItem.Store();
+                        }
+                        else
+                        {
+                            ErrorMessage += $"Die Klemme {i} wurde bereits angelegt\n";
+                        }
 
 
+                    }
+                    if (ErrorMessage != "") 
+                    {
+                        MessageBox.Show(ErrorMessage, "Fehler",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                     }
                     _countService.SetCount(count);
                 }

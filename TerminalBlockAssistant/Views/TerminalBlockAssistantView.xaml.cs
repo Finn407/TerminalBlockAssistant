@@ -23,5 +23,16 @@ namespace TerminalBlockAssistant.Views
         {
             InitializeComponent();
         }
+        private void NumberOnly(object sender, TextCompositionEventArgs e)
+        {
+            if (!int.TryParse(e.Text, out _))
+            {
+                e.Handled = true;
+
+                MessageBox.Show("Bitte geben Sie nur Zahlen ein", "Fehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+        }
     }
 }

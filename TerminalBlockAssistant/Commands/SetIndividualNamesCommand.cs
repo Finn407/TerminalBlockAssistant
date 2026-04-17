@@ -18,11 +18,12 @@ namespace TerminalBlockAssistant.Commands
         private readonly IEngineeringBaseService _engineeringBaseService;
         private readonly ISubmitService _submitService;
         private Application _application;
+        private string ErrorMessage = "";
         public override void Execute(object parameter)
         {
 
-                foreach (TextBoxInput input in _textBoxInputService.GetTextBoxInputs())
-                {
+            foreach (TextBoxInput input in _textBoxInputService.GetTextBoxInputs())
+            {
                 if (input._value != "")
                 {
                     _application = _engineeringBaseService.GetApplication();
@@ -48,9 +49,7 @@ namespace TerminalBlockAssistant.Commands
                             }
                             else
                             {
-                                MessageBox.Show($"Die Klemme mit der Klemmnummer {input._value} existiert bereits", "Fehler",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
+                                ErrorMessage += $"Die Klemme mit der Klemmnummer {input._value} existiert bereits\n";
                             }
                         }
                         else
@@ -67,17 +66,23 @@ namespace TerminalBlockAssistant.Commands
                             MessageBoxImage.Error);
                     }
                 }
-                else 
+                else
                 {
                     MessageBox.Show("Die Eingabe war leer", "Fehler",
                             MessageBoxButton.OK,
                             MessageBoxImage.Error);
                 }
-  
-                }
-            
+
+            }
+            if (ErrorMessage != "") 
+            {
+                MessageBox.Show(ErrorMessage, "Fehler",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            }
+
         }
-        public SetIndividualNamesCommand(ITextBoxInputService textBoxInputService, ICountService countService, IEngineeringBaseService engineeringBaseService, ISubmitService submitService)  
+        public SetIndividualNamesCommand(ITextBoxInputService textBoxInputService, ICountService countService, IEngineeringBaseService engineeringBaseService, ISubmitService submitService)
         {
             _textBoxInputService = textBoxInputService;
             _countService = countService;

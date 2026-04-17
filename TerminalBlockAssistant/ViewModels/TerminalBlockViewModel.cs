@@ -23,7 +23,12 @@ namespace TerminalBlockAssistant.ViewModels
         private readonly ISubmitService _submitService;
         private readonly ITextBoxInputService _textBoxInputService;
         private string _text;
-        public string Text { get => _text; set { _text = value; _countService.SetCount(Parse(value)); OnPropertyChanged(nameof(Text)); } }
+        public string Text { get => _text; set 
+            {
+                _text = value;
+                _countService.SetCount(int.Parse(value));
+                    OnPropertyChanged(nameof(Text)); 
+            } } 
         private ObservableCollection<ObjectItem> Materials;
         private string selectedMaterial;
         public ICommand CreateTerminalBlockCommand { get; }
@@ -68,32 +73,16 @@ namespace TerminalBlockAssistant.ViewModels
                 }
             }
         }
-        public int Parse(string input)
-        {
-            if (input != null)
-            {
-                if (int.TryParse(input, out int result))
-                {
-                    return result;
-                }
-                else
-                {
-                    MessageBox.Show("Bitte geben Sie eine Zahl ein", "Fehler",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                    return 0;
-                }
-            }
-            return 0;
-        }
         public void GenerateTextBoxes() 
         {
             _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
-            for (int i = 0; i < _countService.GetCount(); i++)
+            for (int i = 0; i < int.Parse(Text); i++)
             {
                 _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
             }
             TextBoxes = _textBoxInputService.GetTextBoxInputs();
+            //ggf Button auf visible toggeln
         }
+
     }
 }

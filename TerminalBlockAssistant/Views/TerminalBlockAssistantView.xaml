@@ -10,49 +10,81 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="1" >
-                    <StackPanel>
-                        <ItemsControl ItemsSource="{Binding TextBoxes}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBox Text="{Binding _value, Mode=TwoWay}"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Border>
-                <Border Grid.Column="1" Grid.Row="0">
-                    <Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}"/>
-                </Border>
-                <Border Grid.Column="1" Grid.Row="1">
-                    <Button Content="Individuell erstellen" Command="{Binding SetIndividualNamesCommand}"/>
-                </Border>
-            </Grid>
+
+        <Border Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Label Content="Anzahl Klemmen:" FontSize="18"/>
         </Border>
-        <Border Grid.Column="1" Grid.Row="0">
+
+        <Border Grid.Column="1" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Label Content="Klemmmaterial:" FontSize="18"/>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="1">
+            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="NumberOnly" Height="Auto" Padding="20,0,10,0" />
+        </Border>
+
+        <Border Grid.Column="1" Grid.Row="1">
             <ComboBox ItemsSource="{Binding MaterialNames}"
-          SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}"/>
+          SelectedItem="{Binding SelectedMaterial, Mode=TwoWay}"
+                      Height="Auto"
+                      Padding="20,0,10,0"/>
         </Border>
-        <Border CornerRadius="10" Grid.Column="0" Grid.Row="1">
-            <TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+
+        <Border Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
+            <Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" FontSize="18"/>
         </Border>
-        <Border CornerRadius="10" Grid.Column="1" Grid.Row="1">
-            <Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" />
+
+        <Border Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Label Content="optional: setze Start-Index:" FontSize="18"/>
         </Border>
+
+        <Border Grid.Column="1" Grid.Row="3">
+            <TextBox Text="" Height="Auto" Padding="20,0,10,0" MinHeight="20" FontSize="18"/>
+        </Border>
+
+        <Border Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
+            <Button Content="Klemmen ab Index hinzufügen" FontSize="18"/>
+        </Border>
+
+        <Border Grid.Column="2" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
+            <Button Content="Klemmen ab Index hinzufügen" FontSize="18"/>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
+            <Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" FontSize="18"/>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Grid.RowSpan="6">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding TextBoxes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding _value, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Width="35"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <Border Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0">
+            <Button Content="Individuell erstellen" Command="{Binding SetIndividualNamesCommand}" FontSize="18"/>
+        </Border>
+
+        
     </Grid>
 </UserControl>
