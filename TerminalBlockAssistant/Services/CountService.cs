@@ -10,9 +10,29 @@ namespace TerminalBlockAssistant.Services
     public class CountService : ICountService
     {
         private int _count;
-        public int Count { get { return _count; } set { _count = value; } }
+        public int Count 
+        { 
+            get 
+            { 
+                return _count; 
+            } 
+            set 
+            { 
+                _count = value; 
+            } 
+        }
         private int _individualCount;
-        public int IndividualCount { get { return _individualCount; } set { _individualCount = value; } }
+        public int IndividualCount 
+        { 
+            get 
+            { 
+                return _individualCount; 
+            }
+            set 
+            { 
+                _individualCount = value; 
+            } 
+        }
         public Visibility _individualCreateVisibility { get; set; }
         public Visibility _indexCreateVisibility { get; set; }
         public int GetCount()

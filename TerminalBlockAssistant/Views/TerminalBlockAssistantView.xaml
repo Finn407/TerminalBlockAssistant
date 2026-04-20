@@ -8,12 +8,7 @@
              mc:Ignorable="d"
         Height="auto" Width="auto">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
-                <ResourceDictionary Source="/TerminalBlockAssistant;component/Styles/styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,6 +16,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
@@ -66,20 +62,20 @@
             <ui:TextBox Text="{Binding IndividualText,Mode=TwoWay}" PreviewTextInput="NumberOnly" Height="Auto" PlaceholderText="Start Index" Visibility="{Binding IndexCreateVisibility}" Background="#4231A2C7" Foreground="#212a59"/>
         </Border>
 
-        <Border Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59"/>
+        <Border Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59" Margin="10"/>
+                <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59" Margin="10"/>
+            </StackPanel>
         </Border>
 
-        <Border Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59"/>
-        </Border>
 
-        <Border Grid.Column="0" Grid.Row="5" Grid.RowSpan="6" Margin="5" Visibility="{Binding IndividualCreateVisibility}">
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Grid.RowSpan="6" Margin="5" Visibility="{Binding IndividualCreateVisibility}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding TextBoxes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}"  VerticalAlignment="Center" FontSize="18" Padding="10,10,10,10" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Background="#4231A2C7" Foreground="#212a59"/>
+                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}" VerticalAlignment="Center" FontSize="18" Padding="10,10,10,10" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Background="#4231A2C7" Foreground="#212a59"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

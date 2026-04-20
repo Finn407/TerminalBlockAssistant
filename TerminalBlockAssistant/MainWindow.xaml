@@ -11,12 +11,7 @@
              ExtendsContentIntoTitleBar="True"
     d:DesignHeight="300" d:DesignWidth="300">
     <ui:FluentWindow.Resources>
-        <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
-                <ResourceDictionary Source="/TerminalBlockAssistant;component/Styles/styles.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
     </ui:FluentWindow.Resources>
     <Grid  Background="#4231A2C7">
         <Grid.RowDefinitions>

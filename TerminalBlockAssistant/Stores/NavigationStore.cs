@@ -10,11 +10,18 @@ namespace TerminalBlockAssistant.Stores
     public class NavigationStore
     {
         private ViewModelBase _currentViewModel;
-        public ViewModelBase CurrentViewModel { get { return _currentViewModel; } set 
+        public ViewModelBase CurrentViewModel 
+        { 
+            get 
+            { 
+                return _currentViewModel; 
+            } 
+            set 
             {
                 _currentViewModel = value;
 
-            } }
+            } 
+        }
         public event Action CurrentViewModelChanged;
         private void OnCurrentViewModelChanged() 
         {
