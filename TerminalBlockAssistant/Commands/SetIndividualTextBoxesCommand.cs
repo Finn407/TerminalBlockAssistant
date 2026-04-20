@@ -25,6 +25,7 @@ namespace TerminalBlockAssistant.Commands
             {
                 _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Visible;
                 _terminalBlockViewModel.IndexCreateVisibility = Visibility.Hidden;
+                _terminalBlockViewModel.IndividualText = "";
             }
             else 
             { 

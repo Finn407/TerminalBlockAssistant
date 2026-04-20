@@ -29,15 +29,12 @@ namespace TerminalBlockAssistant.ViewModels
                 _countService.SetCount(value);
                     OnPropertyChanged(nameof(Text)); 
             } } 
-        private ObservableCollection<ObjectItem> Materials;
         private string selectedMaterial;
         public ICommand CreateTerminalBlockCommand { get; }
-        public ICommand SetIndividualNamesCommand { get; }
         public ICommand SetIndividualTextBoxesCommand { get; }
         public ObjectCollection ObjectItems { get; set; }
         public string SelectedMaterial { get => selectedMaterial; set { selectedMaterial = value; _submitService.setMaterialName(value);OnPropertyChanged(nameof(SelectedMaterial)); } }
         public List<string> MaterialNames { get; set; }
-        public SubmitModel submitModel {get;set;}
         private ObservableCollection<TextBoxInput> _textBoxes;
         public ObservableCollection<TextBoxInput> TextBoxes { get => _textBoxes; set { _textBoxes = value;OnPropertyChanged(nameof(TextBoxes)); } }
         private string _individualText;
@@ -55,7 +52,6 @@ namespace TerminalBlockAssistant.ViewModels
             _textBoxInputService = textBoxInputService;
 
             CreateTerminalBlockCommand = new CreateTerminalBlockCommand(_engineeringBaseService,_countService,_submitService,_textBoxInputService);
-            SetIndividualNamesCommand = new SetIndividualNamesCommand(_textBoxInputService,_countService,_engineeringBaseService,_submitService);
             SetIndividualTextBoxesCommand = new SetIndividualTextBoxesCommand(_textBoxInputService, _countService, this);
             
             IndividualCreateVisibility = Visibility.Hidden;
@@ -74,7 +70,6 @@ namespace TerminalBlockAssistant.ViewModels
                     {
                         MaterialNames.Add(material.Name);
                     }
-                    //submitModel = new SubmitModel(SelectedMaterial, ObjectItems);
                     _submitService.setObjectItems(ObjectItems);
                     break;
                 }
@@ -89,8 +84,6 @@ namespace TerminalBlockAssistant.ViewModels
                 _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
             }
             TextBoxes = _textBoxInputService.GetTextBoxInputs();
-            //ggf Button auf visible toggeln
         }
-
     }
 }

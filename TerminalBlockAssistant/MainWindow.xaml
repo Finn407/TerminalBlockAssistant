@@ -8,21 +8,32 @@
              xmlns:vms="clr-namespace:TerminalBlockAssistant.ViewModels"
              xmlns:views="clr-namespace:TerminalBlockAssistant.Views"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
- 
+             ExtendsContentIntoTitleBar="True"
     d:DesignHeight="300" d:DesignWidth="300">
     <ui:FluentWindow.Resources>
-        <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
+        <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
+                <ResourceDictionary Source="/TerminalBlockAssistant;component/Styles/styles.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </ui:FluentWindow.Resources>
-    <Grid>
+    <Grid  Background="#4231A2C7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:TerminalBlockViewModel}">
                 <views:TerminalBlockAssistantView/>
             </DataTemplate>
         </Grid.Resources>
-            <ContentControl Content="{Binding CurrentViewModel}"/>
 
-        <ui:TitleBar>
+        <ui:TitleBar Grid.Row="0" Height="Auto" Background="#212a59" ButtonsForeground="#9f3b1c">
+            
             
         </ui:TitleBar>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
+
     </Grid>
 </ui:FluentWindow>

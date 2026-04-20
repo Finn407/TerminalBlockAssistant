@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using TerminalBlockAssistant.Models;
 using TerminalBlockAssistant.Services;
-using TerminalBlockAssistant.Stores;
 
 namespace TerminalBlockAssistant.Commands
 {
@@ -19,13 +18,14 @@ namespace TerminalBlockAssistant.Commands
         private ISubmitService _submitService;
         private ITextBoxInputService _textBoxInputService;
         private string ErrorMessage = "";
+        ObjectItem selectedItem;
+        ObjectItem selectedMaterial = null;
         public override void Execute(object parameter)
         {
-
             _application = _engineeringBaseService.GetApplication();
-            ObjectItem selectedItem = _application.Selection.FirstOrDefault();
+            selectedItem = _application.Selection.FirstOrDefault();
             int count = _countService.GetCount();
-            ObjectItem selectedMaterial = null;
+            
             foreach (ObjectItem obj in _submitService.ObjectItems()) 
             {
                 if (obj.Name == _submitService.MaterialName()) 
@@ -33,62 +33,42 @@ namespace TerminalBlockAssistant.Commands
                     selectedMaterial = obj;
                 }
             }
-            if (!(selectedMaterial is null)) 
+            if (!(selectedMaterial is null))
             {
                 if (selectedItem.TypeId == ObjectType.DevTerminalBlock)
                 {
                     if (_countService.GetIndividualCount() > 0)
                     {
+                        //Wenn Index Eingabe erfolgt ist
                         for (int i = _countService.GetIndividualCount(); i < count + _countService.GetIndividualCount(); i++)
                         {
-                            if ((_application.Selection.FirstOrDefault().Children.FirstOrDefault(x => x.Name == $"Klemme_{i}")) is null)
-                            {
-                                ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
-                                var attr = newItem.Attributes[4];
-                                attr.Value = $"Klemme_{i}";
-                                newItem.Store();
-                            }
-                            else
-                            {
-                                ErrorMessage += $"Die Klemme {i} wurde bereits angelegt\n";
-                            }
+                            ErrorMessage += this.createTerminalBlock(i.ToString());
                         }
                     }
-                    else if (_textBoxInputService.GetTextBoxInputs().Count > 0) 
+                    else if (_textBoxInputService.GetTextBoxInputs().Count > 0)
                     {
+                        //Wenn individuelle Benennung gestartet wurde
                         foreach (TextBoxInput input in _textBoxInputService.GetTextBoxInputs())
                         {
-                            if ((_application.Selection.FirstOrDefault().Children.FirstOrDefault(x => x.Name == $"Klemme_{input._value}")) is null)
+                            if (input != null)
                             {
-                                ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
-                                var attr = newItem.Attributes[4];
-                                attr.Value = $"Klemme_{input._value}";
-                                newItem.Store();
+                                ErrorMessage += this.createTerminalBlock(input._value);
                             }
                             else
                             {
-                                ErrorMessage += $"Die Klemme mit der Klemmnummer {input._value} existiert bereits\n";
+                                ErrorMessage += $"Die Eingabe Nr.{input._value} ist leer\n";
                             }
                         }
                     }
                     else
                     {
+                        //default
                         for (int i = 0; i < count; i++)
                         {
-                            if ((_application.Selection.FirstOrDefault().Children.FirstOrDefault(x => x.Name == $"Klemme_{i}")) is null)
-                            {
-                                ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
-                                var attr = newItem.Attributes[4];
-                                attr.Value = $"Klemme_{i}";
-                                newItem.Store();
-                            }
-                            else
-                            {
-                                ErrorMessage += $"Die Klemme {i} wurde bereits angelegt\n";
-                            }
+                            ErrorMessage += this.createTerminalBlock(i.ToString());
                         }
-                    }      
-                    if (ErrorMessage != "") 
+                    }
+                    if (ErrorMessage != "")
                     {
                         MessageBox.Show(ErrorMessage, "Fehler",
                         MessageBoxButton.OK,
@@ -104,6 +84,12 @@ namespace TerminalBlockAssistant.Commands
                     MessageBoxImage.Error);
                 }
             }
+            else 
+            {
+                MessageBox.Show("Es wurde kein Klemmmaterial ausgewählt", "Fehler",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
         public CreateTerminalBlockCommand(IEngineeringBaseService engineeringBaseService, ICountService countService,ISubmitService submitService,ITextBoxInputService textBoxInputService) 
         {
@@ -111,6 +97,22 @@ namespace TerminalBlockAssistant.Commands
             _countService = countService;
             _submitService = submitService;
             _textBoxInputService = textBoxInputService;
-        }  
+        }
+        public string createTerminalBlock(string index) 
+        {
+            string result = "";
+            if ((_application.Selection.FirstOrDefault().Children.FirstOrDefault(x => x.Name == $"Klemme_{index}")) is null)
+            {
+                ObjectItem newItem = selectedMaterial.CopyTo(selectedItem);
+                var attr = newItem.Attributes[4];
+                attr.Value = $"Klemme_{index}";
+                newItem.Store();
+            }
+            else
+            {
+                result += $"Die Klemme {index} wurde bereits angelegt\n";
+            }
+            return result;
+        }
     }
 }

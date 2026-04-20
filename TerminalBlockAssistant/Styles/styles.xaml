@@ -1,0 +1,48 @@
+<ResourceDictionary     
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+    <Style x:Key="CustomTextBoxStyle" TargetType="ui:TextBox">
+
+        <!-- Standardzustand -->
+        <Setter Property="Background" Value="#4231A2C7"/>
+        <Setter Property="Foreground" Value="#212a59"/>
+
+        <Style.Triggers>
+
+            <!-- Fokus -->
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="#4231A2C7"/>
+                <Setter Property="Foreground" Value="#212a59"/>
+            </Trigger>
+
+            <!-- Hover -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#6631A2C7"/>
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
+
+	<Style x:Key="NumberTextBox" TargetType="ui:TextBox">
+
+		<!-- Standardzustand -->
+		<Setter Property="Background" Value="#4231A2C7"/>
+		<Setter Property="Foreground" Value="#212a59"/>
+
+		<Style.Triggers>
+
+			<!-- Fokus -->
+			<Trigger Property="IsFocused" Value="True">
+				<Setter Property="Background" Value="#4231A2C7"/>
+				<Setter Property="Foreground" Value="#212a59"/>
+			</Trigger>
+
+			<!-- Hover -->
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="Background" Value="#6631A2C7"/>
+			</Trigger>
+
+		</Style.Triggers>
+	</Style>
+</ResourceDictionary>

@@ -10,7 +10,7 @@ namespace TerminalBlockAssistant.Services
 {
     public class TextBoxInputService : ITextBoxInputService
     {
-        public ObservableCollection<TextBoxInput> TextBoxInputs { get; private set; }
+        public ObservableCollection<TextBoxInput> TextBoxInputs { get; private set; } = new ObservableCollection<TextBoxInput>();
         public ObservableCollection<TextBoxInput> GetTextBoxInputs()
         {
             return TextBoxInputs;
