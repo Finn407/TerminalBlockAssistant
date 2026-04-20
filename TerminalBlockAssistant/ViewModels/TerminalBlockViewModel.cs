@@ -100,6 +100,16 @@ namespace TerminalBlockAssistant.ViewModels
                 OnPropertyChanged(nameof(IndexCreateVisibility)); 
             } 
         }
+        private bool _textBoxLocked;
+        public bool TextBoxLocked 
+        { 
+            get => _textBoxLocked; 
+            set 
+            { 
+                _textBoxLocked = value;
+                OnPropertyChanged(nameof(TextBoxLocked)); 
+            } 
+        }
         public TerminalBlockViewModel(IEngineeringBaseService engineeringBaseService, NavigationStore navigationStore,ICountService countService,ISubmitService submitService, ITextBoxInputService textBoxInputService) 
         {
             _engineeringBaseService = engineeringBaseService;
@@ -116,6 +126,7 @@ namespace TerminalBlockAssistant.ViewModels
 
             var catalogs = _engineeringBaseService.GetApplication().Folders.Catalogs;
             MaterialNames = new List<string>();
+            TextBoxLocked = false;
             foreach (var item in catalogs.Children) 
             {
                 if (item.Name == "IBKfra_260316") 
@@ -141,6 +152,10 @@ namespace TerminalBlockAssistant.ViewModels
                 _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
             }
             TextBoxes = _textBoxInputService.GetTextBoxInputs();
+        }
+        public void LockTextBox() 
+        {
+            TextBoxLocked = !TextBoxLocked;
         }
     }
 }

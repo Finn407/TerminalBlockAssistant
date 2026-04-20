@@ -20,6 +20,7 @@ namespace TerminalBlockAssistant.Commands
 
         public override void Execute(object parameter)
         {
+            _terminalBlockViewModel.LockTextBox();
             _terminalBlockViewModel.GenerateTextBoxes();
             if (_countService.getIndividualCreateVisibility() == System.Windows.Visibility.Hidden)
             {

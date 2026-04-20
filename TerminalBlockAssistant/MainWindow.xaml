@@ -16,7 +16,7 @@
     <Grid  Background="#4231A2C7">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type vms:TerminalBlockViewModel}">
