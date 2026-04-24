@@ -20,19 +20,24 @@ namespace TerminalBlockAssistant.Commands
 
         public override void Execute(object parameter)
         {
-            _terminalBlockViewModel.GenerateTextBoxes();
-            if (_countService.getIndividualCreateVisibility() == System.Windows.Visibility.Hidden)
-            {
-                _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Visible;
-                _terminalBlockViewModel.IndexCreateVisibility = Visibility.Hidden;
-                _terminalBlockViewModel.IndividualText = "";
-            }
-            else 
-            { 
-                _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Hidden;
-                _terminalBlockViewModel.IndexCreateVisibility = Visibility.Visible;
-                _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
-            }
+
+                if (_countService.getIndividualCreateVisibility() == System.Windows.Visibility.Hidden)
+                {
+                if (_terminalBlockViewModel.GenerateTextBoxes())
+                {
+                    _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Visible;
+                    _terminalBlockViewModel.IndexCreateVisibility = Visibility.Hidden;
+                    _terminalBlockViewModel.IndividualText = "";
+                }
+                }
+                else
+                {
+                    _terminalBlockViewModel.IndividualCreateVisibility = Visibility.Hidden;
+                    _terminalBlockViewModel.IndexCreateVisibility = Visibility.Visible;
+                    _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
+                }
+            
+            
         }
 
         public SetIndividualTextBoxesCommand(ITextBoxInputService textBoxInputService, ICountService countService, TerminalBlockViewModel terminalBlockViewModel) 

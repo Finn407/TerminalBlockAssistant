@@ -75,15 +75,21 @@ namespace TerminalBlockAssistant.ViewModels
                 }
             }
         }
-        public void GenerateTextBoxes() 
+        public bool GenerateTextBoxes() 
         {
-            _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
             int.TryParse(Text, out int result);
+            if (result <= 0)
+            {
+                MessageBox.Show("Es wurde keine Anzahl von Klemmen angegeben");
+                return false;
+            }
+            _textBoxInputService.SetTextBoxInputs(new ObservableCollection<TextBoxInput>());
             for (int i = 0; i < result; i++)
             {
                 _textBoxInputService.GetTextBoxInputs().Add(new TextBoxInput(""));
             }
             TextBoxes = _textBoxInputService.GetTextBoxInputs();
+            return true;
         }
     }
 }
