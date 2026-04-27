@@ -88,7 +88,7 @@
                 <ItemsControl ItemsSource="{Binding TextBoxes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Style="{DynamicResource PrimaryTextBoxStyle}"/>
+                            <ui:TextBox Text="{Binding Value, Mode=TwoWay}" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Style="{DynamicResource PrimaryTextBoxStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

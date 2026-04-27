@@ -20,12 +20,16 @@ namespace TerminalBlockAssistant.Commands
         private string ErrorMessage = "";
         ObjectItem selectedItem;
         ObjectItem selectedMaterial = null;
+        private int labelCount;
+        
         public override void Execute(object parameter)
         {
             _application = _engineeringBaseService.GetApplication();
             selectedItem = _application.Selection.FirstOrDefault();
             int count = _countService.GetCount();
-            
+            labelCount = 0;
+
+
             foreach (ObjectItem obj in _submitService.ObjectItems()) 
             {
                 if (obj.Name == _submitService.MaterialName()) 
@@ -50,14 +54,15 @@ namespace TerminalBlockAssistant.Commands
                         //Wenn individuelle Benennung gestartet wurde
                         foreach (TextBoxInput input in _textBoxInputService.GetTextBoxInputs())
                         {
-                            if (input._value != "")
+                            if (input.Value != "")
                             {
-                                ErrorMessage += this.createTerminalBlock(input._value);
+                                ErrorMessage += this.createTerminalBlock(input.Value);
                             }
                             else
                             {
-                                ErrorMessage += $"Die Eingabe Nr.{input._value} ist leer\n";
+                                ErrorMessage += $"Die Eingabe Nr.{labelCount} ist leer\n";
                             }
+                            labelCount += 1;
                         }
                     }
                     else

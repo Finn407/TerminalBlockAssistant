@@ -8,10 +8,10 @@ namespace TerminalBlockAssistant.Models
 {
     public class TextBoxInput
     {
-        public string _value { get; set; }
+        public string Value { get; set; }
         public TextBoxInput(string value) 
         {
-            _value = value;
+            Value = value;
         }
     }
 }
