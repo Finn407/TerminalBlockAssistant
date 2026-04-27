@@ -50,7 +50,7 @@ namespace TerminalBlockAssistant.Commands
                         //Wenn individuelle Benennung gestartet wurde
                         foreach (TextBoxInput input in _textBoxInputService.GetTextBoxInputs())
                         {
-                            if (input != null)
+                            if (input._value != "")
                             {
                                 ErrorMessage += this.createTerminalBlock(input._value);
                             }
