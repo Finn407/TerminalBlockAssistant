@@ -13,9 +13,9 @@
     <ui:FluentWindow.Resources>
         <ResourceDictionary>
         <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
-                <ResourceDictionary Source="/TerminalBlockAssistant;component/Styles/styles.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
         </ResourceDictionary>
     </ui:FluentWindow.Resources>
     <Grid  Background="#4231A2C7">

@@ -11,8 +11,20 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/TerminalBlockAssistant;component/ResourceDictionaries/ApplicationTheme.xaml"/>
-                <ResourceDictionary Source="/TerminalBlockAssistant;component/Styles/styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="PrimaryTextBoxStyle" TargetType="{x:Type ui:TextBox}" BasedOn="{StaticResource {x:Type ui:TextBox}}">
+                <Setter Property="Background" Value="#4231A2C7"/>
+                <Setter Property="Foreground" Value="#212a59"/>
+                <Setter Property="Height" Value="Auto"/>
+            </Style>
+            <Style x:Key="PrimaryButtonStyle" TargetType="{x:Type ui:Button}" BasedOn="{StaticResource {x:Type ui:Button}}">
+                <Setter Property="Background" Value="#4231A2C7"/>
+                <Setter Property="Foreground" Value="#212a59"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Appearance" Value="Info"/>
+                <Setter Property="FontSize" Value="18"/>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -28,9 +40,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+
         </Grid.RowDefinitions>
 
         <Border Grid.Column="0" Grid.Row="0"  Background="#4231A2C7">
@@ -50,7 +60,7 @@
         </Border>
 
         <Border Grid.Column="0" Grid.Row="2" Margin="5">
-            <ui:TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="NumberOnly" Height="Auto" PlaceholderText="Anzahl Klemmen" Background="#4231A2C7" Foreground="#212a59"/>
+            <ui:TextBox Text="{Binding Text, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" PreviewTextInput="NumberOnly" PlaceholderText="Anzahl Klemmen" Style="{DynamicResource PrimaryTextBoxStyle}"/>
         </Border>
 
         <Border Grid.Column="1" Grid.Row="2" Margin="5">
@@ -63,23 +73,23 @@
         </Border>
 
         <Border Grid.Column="0" Grid.Row="4" Margin="5">
-            <ui:TextBox Text="{Binding IndividualText,Mode=TwoWay}" PreviewTextInput="NumberOnly" Height="Auto" PlaceholderText="Start Index" Visibility="{Binding IndexCreateVisibility}" Background="#4231A2C7" Foreground="#212a59"/>
+            <ui:TextBox Text="{Binding IndividualText,Mode=TwoWay}" PreviewTextInput="NumberOnly" PlaceholderText="Start Index" Visibility="{Binding IndexCreateVisibility}" Style="{DynamicResource PrimaryTextBoxStyle}"/>
         </Border>
 
         <Border Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59"/>
+            <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" Style="{DynamicResource PrimaryButtonStyle}" />
         </Border>
 
         <Border Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" FontSize="18" Appearance="Info" Height="auto" Width="auto" Background="#4231A2C7" Foreground="#212a59"/>
+            <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" Style="{DynamicResource PrimaryButtonStyle}"/> 
         </Border>
 
-        <Border Grid.Column="0" Grid.Row="5" Grid.RowSpan="6" Margin="5" Visibility="{Binding IndividualCreateVisibility}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border Grid.Column="0" Grid.Row="6" Grid.RowSpan="2" MaxHeight="200"  Visibility="{Binding IndividualCreateVisibility}">
+            <ScrollViewer VerticalScrollBarVisibility="Visible">
                 <ItemsControl ItemsSource="{Binding TextBoxes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}"  VerticalAlignment="Center" FontSize="18" Padding="10,10,10,10" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Background="#4231A2C7" Foreground="#212a59"/>
+                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}"  PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Style="{DynamicResource PrimaryTextBoxStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
