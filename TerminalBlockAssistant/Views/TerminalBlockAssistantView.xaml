@@ -39,7 +39,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
 
         </Grid.RowDefinitions>
 
@@ -77,19 +76,18 @@
         </Border>
 
         <Border Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" Style="{DynamicResource PrimaryButtonStyle}" />
+            <StackPanel Orientation="Horizontal">
+                <ui:Button Content="Individuelle Benennung" Command="{Binding SetIndividualTextBoxesCommand}" Style="{DynamicResource PrimaryButtonStyle}" Margin="0,0,10,0"/>
+                <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            </StackPanel>
         </Border>
 
-        <Border Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-            <ui:Button Content="Erstellen" Command="{Binding CreateTerminalBlockCommand}" Style="{DynamicResource PrimaryButtonStyle}"/> 
-        </Border>
-
-        <Border Grid.Column="0" Grid.Row="6" Grid.RowSpan="2" MaxHeight="200"  Visibility="{Binding IndividualCreateVisibility}">
-            <ScrollViewer VerticalScrollBarVisibility="Visible">
+        <Border Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" MaxHeight="200" Visibility="{Binding IndividualCreateVisibility}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding TextBoxes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}"  PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Style="{DynamicResource PrimaryTextBoxStyle}"/>
+                            <ui:TextBox Text="{Binding _value, Mode=TwoWay}" PlaceholderText="Klemme_" PreviewTextInput="NumberOnly" Style="{DynamicResource PrimaryTextBoxStyle}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

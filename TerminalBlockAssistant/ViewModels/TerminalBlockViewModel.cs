@@ -29,20 +29,74 @@ namespace TerminalBlockAssistant.ViewModels
                 _countService.SetCount(value);
                     OnPropertyChanged(nameof(Text)); 
             } } 
-        private string selectedMaterial;
+
         public ICommand CreateTerminalBlockCommand { get; }
         public ICommand SetIndividualTextBoxesCommand { get; }
         public ObjectCollection ObjectItems { get; set; }
-        public string SelectedMaterial { get => selectedMaterial; set { selectedMaterial = value; _submitService.setMaterialName(value);OnPropertyChanged(nameof(SelectedMaterial)); } }
-        public List<string> MaterialNames { get; set; }
+        private string _selectedMaterial;
+        public string SelectedMaterial 
+        { 
+            get => _selectedMaterial; 
+            set 
+            { 
+                _selectedMaterial = value; 
+                _submitService.setMaterialName(value);
+                OnPropertyChanged(nameof(SelectedMaterial)); 
+            } 
+        }
+        private List<string> _materialNames;
+        public List<string> MaterialNames 
+        { 
+            get => _materialNames; 
+            set 
+            { 
+                _materialNames = value;
+                OnPropertyChanged(nameof(MaterialNames)); 
+            } 
+        }
         private ObservableCollection<TextBoxInput> _textBoxes;
-        public ObservableCollection<TextBoxInput> TextBoxes { get => _textBoxes; set { _textBoxes = value;OnPropertyChanged(nameof(TextBoxes)); } }
+        public ObservableCollection<TextBoxInput> TextBoxes 
+        { 
+            get => _textBoxes; 
+            set 
+            { 
+                _textBoxes = value;
+                OnPropertyChanged(nameof(TextBoxes)); 
+            } 
+        }
         private string _individualText;
-        public string IndividualText {get=> _individualText;set { _individualText = value;_countService.SetIndividualCount(value); OnPropertyChanged(nameof(IndividualText)); } }
+        public string IndividualText 
+        {
+            get=> _individualText;
+            set 
+            { 
+                _individualText = value;
+                _countService.SetIndividualCount(value); 
+                OnPropertyChanged(nameof(IndividualText)); 
+            } 
+        }
         private Visibility _individualCreateVisibility;
-        public Visibility IndividualCreateVisibility { get => _individualCreateVisibility; set { _individualCreateVisibility = value; _countService.setIndividualCreateVisibility(value); OnPropertyChanged(nameof(IndividualCreateVisibility)); } }
+        public Visibility IndividualCreateVisibility 
+        { 
+            get => _individualCreateVisibility; 
+            set 
+            { 
+                _individualCreateVisibility = value; 
+                _countService.setIndividualCreateVisibility(value); 
+                OnPropertyChanged(nameof(IndividualCreateVisibility)); 
+            } 
+        }
         private Visibility _indexCreateVisibility;
-        public Visibility IndexCreateVisibility { get => _indexCreateVisibility; set { _indexCreateVisibility = value; _countService.setIndexCreateVisibility(value);OnPropertyChanged(nameof(IndexCreateVisibility)); } }
+        public Visibility IndexCreateVisibility 
+        { 
+            get => _indexCreateVisibility; 
+            set 
+            { 
+                _indexCreateVisibility = value; 
+                _countService.setIndexCreateVisibility(value);
+                OnPropertyChanged(nameof(IndexCreateVisibility)); 
+            } 
+        }
         public TerminalBlockViewModel(IEngineeringBaseService engineeringBaseService, NavigationStore navigationStore,ICountService countService,ISubmitService submitService, ITextBoxInputService textBoxInputService) 
         {
             _engineeringBaseService = engineeringBaseService;
